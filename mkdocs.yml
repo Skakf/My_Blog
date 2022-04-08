@@ -1,0 +1,187 @@
+site_name: KiseKi's Blog
+site_url: http://example.com
+site_author: KiseKi
+theme: 
+        name: material
+
+        features:
+          - navigation.instant  #离线使用构建时，请确保禁用以下配置设置：即时加载、站点分析、git 存储库、版本控制和评论系统
+          - navigation.sections
+          - navigation.tabs
+          #- navigation.tabs.sticky
+          - navigation.top  # 当用户向下滚动后再次开始向上滚动时，可以显示返回顶部按钮。它居中呈现，位于标题下方。
+          - navigation.tracking
+
+          - header.autohide
+
+        palette: 
+          - scheme: default
+            primary: blue grey
+            accent: amber
+            toggle:
+#             icon: material/toggle-switch-off-outline/material/toggle-switch || other config: material/brightness-4 + material/brightness-7
+              icon: material/weather-night
+              name: Switch to dark mode
+          - scheme: slate
+            primary: amber
+            accent: deep orange 
+            toggle: 
+              icon: material/weather-sunny
+              name: Switch to light mode
+
+        # custom_dir: docs/overrides/   #用于自定义模板样式
+#Page Tree 导航
+nav: 
+    - Home: index.md
+    - About: about.md
+    - Paper: 
+      - 综述: 
+        - 基于固件的漏洞挖掘梳理: document/3-paper/0-基于固件的漏洞挖掘方法梳理.md
+        - 嵌入式固件综述: document/3-paper/0-嵌入式固件综述.md
+        - 物联网设备漏洞检测 综述两篇: document/3-paper/0-物联网设备漏洞检测 综述 两篇.md
+        - survey: document/3-paper/0-survey-诸葛建伟.md
+      - Firmadyne: document/3-paper/1-Firmadyne.md
+      - Blackhat: document/3-paper/10-blackhat.md
+      - FirmAE: document/3-paper/2-FirmAE.md
+      - DECAF: document/3-paper/3-DECAF.md
+      - FirmAFL: document/3-paper/3-firmafl.md
+      - HALucinator: document/3-paper/4-HALucinator.md
+      - P2IM: document/3-paper/5-P2IM.md
+      - Jetset: document/3-paper/58-Jetset.md
+      - RAID2019-论文分析: document/3-paper/6-RAID2019-论文分析.md
+      - Profuzzer: document/3-paper/7-Profuzzer论文分析.md
+      - 序列相似性分析-4篇论文: document/3-paper/8-序列相似性分析-4篇论文.md
+      - 虚拟化攻防_相关论文_阅读笔记: document/3-paper/9-虚拟化攻防_相关论文_阅读笔记.md
+    - Virtualization: 
+      - Qemu: document/4-virtualization/Qemu.md
+      - TCG: document/4-virtualization/TCG.md  
+    - Secuity: 
+      - 读书笔记: document/5-security/1-0day.md
+      - 缓冲区溢出实验: document/5-security/2-bof.md
+      - AFL: document/5-security/AFL源码学习.md
+      - 符号执行: document/5-security/符号执行.md
+      - 污点分析: document/5-security/污点分析.md
+      - Firmadyne+挖漏洞: document/9-tool/firmadyne+挖漏洞.md
+      - 物联网漏洞挖掘与无文件型恶意软件: document/9-tool/000-调研-物联网漏洞挖掘 & 物联网中无文件型恶意软件检测.md
+    - OS: 
+      - Linux0.11_debug_with_qemu: document/6-os/Linux0.11_debug_with_qemu.md
+      - Linux与嵌入式系统-内核与驱动编程笔记: document/6-os/Linux与嵌入式系统 内核 驱动编程 笔记.md
+      - Linux内核设计的艺术: document/6-os/Linux内核设计的艺术.md
+    - CTF: 
+      - CTF-工控固件逆向-复现writeup: document/7-ctf/CTF-工控固件逆向-复现writeup.md
+    - Python: 
+      - Python编程: document/8-python/python.md
+      - 5分钟写爬虫: document/8-python/5分钟写爬虫.md
+      - Shell编程: document/8-python/Shell.md
+      - Shell Bash: document/8-python/shell bash.md
+    - Tools: 
+      - Sublime快捷键: document/9-tool/Sublime 快捷键.md
+      - docker使用指北: document/9-tool/docker使用指北.md
+      - Git使用笔记: document/9-tool/git 使用笔记.md
+      - Openvswitch搭建br0: document/9-tool/openvswitch搭建 br0.md
+      - Postgres-sql 基本用法: document/9-tool/postgres-sql 基本用法.md
+      - Qemu创建qcow2格式镜像: document/9-tool/Qemu创建qcow2格式镜像.md
+      - 如何用qemu-kvm启动虚拟机: document/9-tool/如何用qemu-kvm启动虚拟机.md
+      - Firmafl搭建过程遇到的问题: document/9-tool/安装 firmafl.md
+      - 路由器原理: document/9-tool/路由器原理.md
+
+    - 参会:
+      - 澳洲斯威本科技大学-漏洞挖掘线上技术论坛-20210524: document/10-meeting/01-210524-澳洲斯威本科技大学-漏洞挖掘线上技术论坛.md
+      - ICICS 2021: document/10-meeting/ICICS 2021.md
+      - 互联网安全大会ISC 2020: document/10-meeting/互联网安全大会 小结.md
+    - 常见问题合集:
+      - 查看设备指令架构: document/10-solutions/0110-查看设备指令架构.md
+      - Ubuntu安装Burpsuite: document/10-solutions/Ubuntu 安装 burpsuite.md
+      - Ubuntu安装ida: document/10-solutions/Ubuntu下安装ida.md
+      - Vmware-ubuntu终极配网指南: document/10-solutions/Vmware -ubuntu终极配网指南.md
+      - 安装vmtools有问题: document/10-solutions/Vmware 安装vmtools有问题.md
+      - Windows10 显示器亮度不能调节: document/10-solutions/Windows10 显示器亮度不能调节.md
+      - ubuntu配置网络: document/10-solutions/ubuntu-net-1.md
+      - 报错solution: document/10-solutions/一些奇怪的问题.md
+      - 代码报错合集-杂货铺: document/10-solutions/代码报错合集-杂货铺.md
+      - 多线程自动测试脚本编写: document/10-solutions/多线程自动测试脚本编写.md
+      - 笔记本更换内存条: document/10-solutions/笔记本更换内存条.md
+
+#----------------------------------------------------------------------------
+# Plugins
+plugins:
+  - search
+  # - git-revision-date-localized:
+  #     type: date
+  #     enable_creation_date: true
+  #     fallback_to_build_date: true
+  - git-revision-date:
+      enabled_if_env: CI
+  # - redirects:
+  #     redirect_maps:
+  #       changelog/insiders.md: insiders/changelog.md
+  #       reference/meta-tags.md: reference/index.md
+  #       reference/variables.md: https://mkdocs-macros-plugin.readthedocs.io/
+  #       sponsorship.md: insiders/index.md
+  #       upgrading.md: upgrade.md
+  # - minify:
+  #     minify_html: true
+
+
+# Customization 社交链接
+extra:
+  # 谷歌分析？
+  # analytics:
+  #   provider: google
+  #   property: !ENV GOOGLE_ANALYTICS_KEY
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com
+
+#????????????????????????
+# extra_css:
+#   - overrides/stylesheets/extra.css  
+
+# Extensions-------------------------------------------------------------------
+#markdown语法扩展
+
+markdown_extensions:
+  - abbr
+  - admonition  #提示块
+  - attr_list
+  - def_list
+  - footnotes
+  - meta        #定义元数据，通过文章上下文控制，如disqus
+  - md_in_html
+  - codehilite:
+      linenums: true
+      guess_lang: false
+
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret      # 下划线上标
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:materialx.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      # repo_url_shorthand: true
+      # user: squidfunk
+      # repo: mkdocs-material
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+# #-------------------------------------------------------------------  
