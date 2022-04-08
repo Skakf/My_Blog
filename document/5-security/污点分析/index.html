@@ -1,0 +1,1983 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="KiseKi">
+      
+      
+        <link rel="canonical" href="http://example.com/document/5-security/%E6%B1%A1%E7%82%B9%E5%88%86%E6%9E%90/">
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.7">
+    
+    
+      
+        <title>污点分析 - KiseKi's Blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.9d5733d3.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.e6a45f82.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="amber">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="KiseKi&#39;s Blog" class="md-header__button md-logo" aria-label="KiseKi's Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            KiseKi's Blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              污点分析
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="amber" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../.." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../../about/" class="md-tabs__link">
+      About
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../3-paper/0-%E5%9F%BA%E4%BA%8E%E5%9B%BA%E4%BB%B6%E7%9A%84%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E6%96%B9%E6%B3%95%E6%A2%B3%E7%90%86/" class="md-tabs__link">
+        Paper
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../4-virtualization/Qemu/" class="md-tabs__link">
+        Virtualization
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../1-0day/" class="md-tabs__link md-tabs__link--active">
+        Secuity
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../6-os/Linux0.11_debug_with_qemu/" class="md-tabs__link">
+        OS
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../7-ctf/CTF-%E5%B7%A5%E6%8E%A7%E5%9B%BA%E4%BB%B6%E9%80%86%E5%90%91-%E5%A4%8D%E7%8E%B0writeup/" class="md-tabs__link">
+        CTF
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../8-python/python/" class="md-tabs__link">
+        Python
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../9-tool/Sublime%20%E5%BF%AB%E6%8D%B7%E9%94%AE/" class="md-tabs__link">
+        Tools
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../10-meeting/01-210524-%E6%BE%B3%E6%B4%B2%E6%96%AF%E5%A8%81%E6%9C%AC%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6-%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E7%BA%BF%E4%B8%8A%E6%8A%80%E6%9C%AF%E8%AE%BA%E5%9D%9B/" class="md-tabs__link">
+        参会
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../10-solutions/0110-%E6%9F%A5%E7%9C%8B%E8%AE%BE%E5%A4%87%E6%8C%87%E4%BB%A4%E6%9E%B6%E6%9E%84/" class="md-tabs__link">
+        常见问题合集
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="KiseKi&#39;s Blog" class="md-nav__button md-logo" aria-label="KiseKi's Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    KiseKi's Blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Paper
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Paper" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Paper
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          综述
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="综述" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          综述
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-paper/0-%E5%9F%BA%E4%BA%8E%E5%9B%BA%E4%BB%B6%E7%9A%84%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E6%96%B9%E6%B3%95%E6%A2%B3%E7%90%86/" class="md-nav__link">
+        基于固件的漏洞挖掘梳理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-paper/0-%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%9B%BA%E4%BB%B6%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        嵌入式固件综述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-paper/0-%E7%89%A9%E8%81%94%E7%BD%91%E8%AE%BE%E5%A4%87%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B%20%E7%BB%BC%E8%BF%B0%20%E4%B8%A4%E7%AF%87/" class="md-nav__link">
+        物联网设备漏洞检测 综述两篇
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-paper/0-survey-%E8%AF%B8%E8%91%9B%E5%BB%BA%E4%BC%9F/" class="md-nav__link">
+        survey
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-paper/1-Firmadyne/" class="md-nav__link">
+        Firmadyne
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-paper/10-blackhat/" class="md-nav__link">
+        Blackhat
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-paper/2-FirmAE/" class="md-nav__link">
+        FirmAE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-paper/3-DECAF/" class="md-nav__link">
+        DECAF
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-paper/3-firmafl/" class="md-nav__link">
+        FirmAFL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-paper/4-HALucinator/" class="md-nav__link">
+        HALucinator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-paper/5-P2IM/" class="md-nav__link">
+        P2IM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-paper/58-Jetset/" class="md-nav__link">
+        Jetset
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-paper/6-RAID2019-%E8%AE%BA%E6%96%87%E5%88%86%E6%9E%90/" class="md-nav__link">
+        RAID2019-论文分析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-paper/7-Profuzzer%E8%AE%BA%E6%96%87%E5%88%86%E6%9E%90/" class="md-nav__link">
+        Profuzzer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-paper/8-%E5%BA%8F%E5%88%97%E7%9B%B8%E4%BC%BC%E6%80%A7%E5%88%86%E6%9E%90-4%E7%AF%87%E8%AE%BA%E6%96%87/" class="md-nav__link">
+        序列相似性分析-4篇论文
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-paper/9-%E8%99%9A%E6%8B%9F%E5%8C%96%E6%94%BB%E9%98%B2_%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87_%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        虚拟化攻防_相关论文_阅读笔记
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Virtualization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Virtualization" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Virtualization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../4-virtualization/Qemu/" class="md-nav__link">
+        Qemu
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../4-virtualization/TCG/" class="md-nav__link">
+        TCG
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Secuity
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Secuity" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Secuity
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-0day/" class="md-nav__link">
+        读书笔记
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-bof/" class="md-nav__link">
+        缓冲区溢出实验
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AFL%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        AFL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/" class="md-nav__link">
+        符号执行
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          污点分析
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        污点分析
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    概述
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    一. 识别污点源
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    二. 污点传播分析
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    三.  无害处理
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    四. 关键技术
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    总结
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    参考文献：
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    污点分析-其他一些相关工作
+  </a>
+  
+    <nav class="md-nav" aria-label="污点分析-其他一些相关工作">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kirenenko" class="md-nav__link">
+    Kirenenko
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-_1" class="md-nav__link">
+    一篇硕士毕业论文-符号执行+污点分析
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../9-tool/firmadyne%2B%E6%8C%96%E6%BC%8F%E6%B4%9E/" class="md-nav__link">
+        Firmadyne+挖漏洞
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../9-tool/000-%E8%B0%83%E7%A0%94-%E7%89%A9%E8%81%94%E7%BD%91%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%20%26%20%E7%89%A9%E8%81%94%E7%BD%91%E4%B8%AD%E6%97%A0%E6%96%87%E4%BB%B6%E5%9E%8B%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6%E6%A3%80%E6%B5%8B/" class="md-nav__link">
+        物联网漏洞挖掘与无文件型恶意软件
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          OS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="OS" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          OS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6-os/Linux0.11_debug_with_qemu/" class="md-nav__link">
+        Linux0.11_debug_with_qemu
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6-os/Linux%E4%B8%8E%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%20%E5%86%85%E6%A0%B8%20%E9%A9%B1%E5%8A%A8%E7%BC%96%E7%A8%8B%20%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        Linux与嵌入式系统-内核与驱动编程笔记
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6-os/Linux%E5%86%85%E6%A0%B8%E8%AE%BE%E8%AE%A1%E7%9A%84%E8%89%BA%E6%9C%AF/" class="md-nav__link">
+        Linux内核设计的艺术
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          CTF
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CTF" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          CTF
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../7-ctf/CTF-%E5%B7%A5%E6%8E%A7%E5%9B%BA%E4%BB%B6%E9%80%86%E5%90%91-%E5%A4%8D%E7%8E%B0writeup/" class="md-nav__link">
+        CTF-工控固件逆向-复现writeup
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Python
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Python" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Python
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../8-python/python/" class="md-nav__link">
+        Python编程
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../8-python/5%E5%88%86%E9%92%9F%E5%86%99%E7%88%AC%E8%99%AB/" class="md-nav__link">
+        5分钟写爬虫
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../8-python/Shell/" class="md-nav__link">
+        Shell编程
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../8-python/shell%20bash/" class="md-nav__link">
+        Shell Bash
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          Tools
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tools" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Tools
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../9-tool/Sublime%20%E5%BF%AB%E6%8D%B7%E9%94%AE/" class="md-nav__link">
+        Sublime快捷键
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../9-tool/docker%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8C%97/" class="md-nav__link">
+        docker使用指北
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../9-tool/git%20%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        Git使用笔记
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../9-tool/openvswitch%E6%90%AD%E5%BB%BA%20br0/" class="md-nav__link">
+        Openvswitch搭建br0
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../9-tool/postgres-sql%20%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/" class="md-nav__link">
+        Postgres-sql 基本用法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../9-tool/Qemu%E5%88%9B%E5%BB%BAqcow2%E6%A0%BC%E5%BC%8F%E9%95%9C%E5%83%8F/" class="md-nav__link">
+        Qemu创建qcow2格式镜像
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../9-tool/%E5%A6%82%E4%BD%95%E7%94%A8qemu-kvm%E5%90%AF%E5%8A%A8%E8%99%9A%E6%8B%9F%E6%9C%BA/" class="md-nav__link">
+        如何用qemu-kvm启动虚拟机
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../9-tool/%E5%AE%89%E8%A3%85%20firmafl/" class="md-nav__link">
+        Firmafl搭建过程遇到的问题
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../9-tool/%E8%B7%AF%E7%94%B1%E5%99%A8%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        路由器原理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          参会
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="参会" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          参会
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-meeting/01-210524-%E6%BE%B3%E6%B4%B2%E6%96%AF%E5%A8%81%E6%9C%AC%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6-%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E7%BA%BF%E4%B8%8A%E6%8A%80%E6%9C%AF%E8%AE%BA%E5%9D%9B/" class="md-nav__link">
+        澳洲斯威本科技大学-漏洞挖掘线上技术论坛-20210524
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-meeting/ICICS%202021/" class="md-nav__link">
+        ICICS 2021
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-meeting/%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8%E5%A4%A7%E4%BC%9A%20%E5%B0%8F%E7%BB%93/" class="md-nav__link">
+        互联网安全大会ISC 2020
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_11">
+          常见问题合集
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="常见问题合集" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          常见问题合集
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-solutions/0110-%E6%9F%A5%E7%9C%8B%E8%AE%BE%E5%A4%87%E6%8C%87%E4%BB%A4%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        查看设备指令架构
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-solutions/Ubuntu%20%E5%AE%89%E8%A3%85%20burpsuite/" class="md-nav__link">
+        Ubuntu安装Burpsuite
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-solutions/Ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85ida/" class="md-nav__link">
+        Ubuntu安装ida
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-solutions/Vmware%20-ubuntu%E7%BB%88%E6%9E%81%E9%85%8D%E7%BD%91%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        Vmware-ubuntu终极配网指南
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-solutions/Vmware%20%E5%AE%89%E8%A3%85vmtools%E6%9C%89%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        安装vmtools有问题
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-solutions/Windows10%20%E6%98%BE%E7%A4%BA%E5%99%A8%E4%BA%AE%E5%BA%A6%E4%B8%8D%E8%83%BD%E8%B0%83%E8%8A%82/" class="md-nav__link">
+        Windows10 显示器亮度不能调节
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-solutions/ubuntu-net-1/" class="md-nav__link">
+        ubuntu配置网络
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-solutions/%E4%B8%80%E4%BA%9B%E5%A5%87%E6%80%AA%E7%9A%84%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        报错solution
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-solutions/%E4%BB%A3%E7%A0%81%E6%8A%A5%E9%94%99%E5%90%88%E9%9B%86-%E6%9D%82%E8%B4%A7%E9%93%BA/" class="md-nav__link">
+        代码报错合集-杂货铺
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-solutions/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E8%87%AA%E5%8A%A8%E6%B5%8B%E8%AF%95%E8%84%9A%E6%9C%AC%E7%BC%96%E5%86%99/" class="md-nav__link">
+        多线程自动测试脚本编写
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-solutions/%E7%AC%94%E8%AE%B0%E6%9C%AC%E6%9B%B4%E6%8D%A2%E5%86%85%E5%AD%98%E6%9D%A1/" class="md-nav__link">
+        笔记本更换内存条
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    概述
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    一. 识别污点源
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    二. 污点传播分析
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    三.  无害处理
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    四. 关键技术
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    总结
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    参考文献：
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    污点分析-其他一些相关工作
+  </a>
+  
+    <nav class="md-nav" aria-label="污点分析-其他一些相关工作">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kirenenko" class="md-nav__link">
+    Kirenenko
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-_1" class="md-nav__link">
+    一篇硕士毕业论文-符号执行+污点分析
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>污点分析</h1>
+
+<p>## 污点分析</p>
+<h4 id="_1">概述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h4>
+<p>污点分析可以抽象成一个三元组〈sources,sinks,sanitizers〉的形式,</p>
+<ul>
+<li>
+<p>source 即污点源,代表直接引入不受 信任的数据或者机密数据到系统中;</p>
+</li>
+<li>
+<p>sink即污点汇聚点,代表直接产生安全敏感操作(违反数据完整性)或者泄露 隐私数据到外界(违反数据保密性);</p>
+</li>
+<li>
+<p>sanitizer 即无害处理,代表通过数据加密或者移除危害操作等手段使数据传 播不再对软件系统的信息安全产生危害.</p>
+</li>
+</ul>
+<p>污点分析就是分析程序中由污点源引入的数据是否能够不经无害处 理,而直接传播到污点汇聚点.如果不能,说明系统是信息流安全的;否则,说明系统产生了隐私数据泄露或危险 数据操作等安全问题.</p>
+<h4 id="_2">一. 识别污点源<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
+<p>现有的识别污点源和汇聚点的方法可以大致分成 3 类:</p>
+<ul>
+<li>一类使用启发式的策略进行标记,例如把来自程序 外部输入的数据统称为“污点”数据,保守地认为这些数据有可能包含恶意的攻击数据</li>
+<li>工具会根据具体应用程序调用的 API 或者重要的数据类型,手工标记源和汇聚点(如 DroidSafe[12]);</li>
+<li>第 3 类工 具使用统计或机器学习技术自动地识别和标记污点源及汇聚点 </li>
+</ul>
+<h4 id="_3">二. 污点传播分析<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
+<p>污点传播分析就是分析污点标记数据在程序中的传播途径.</p>
+<p>按照分析过程中关注的程序依赖关系的不同, 可以将污点传播分析分为显式流分析和隐式流分析. </p>
+<ul>
+<li>
+<p>显式流分析:就是分析污点标记如何随程序中变量之间的数据依赖关系传播.</p>
+</li>
+<li>
+<p>隐式流分析:是分析污点标记如何随程序中变量之间的控制依赖关系传播,也就是分析 污点标记如何从条件指令传播到其所控制的语句.</p>
+</li>
+</ul>
+<p>(对隐式流污点传播处理不当导致本 应被标记的变量没有被标记的问题称为**欠污染(under-taint)<strong>问题.相反地,由于污点标记的数量过多而导致污点 变量大量扩散的问题称为**过污染(over-taint)问题</strong>.目前,针对隐式流问题的研究重点是尽量减少欠污染和过污 染的情况.)</p>
+<h4 id="_4">三.  无害处理<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
+<p>无害处理模块：是指污点数据经过该模块的处理后,数据本身不再携带敏感信息 / 针对该数据的操作不会再对系统产生危害.换言之,带污点标记的数据在经过无 害处理模块后,污点标记可以被移除.</p>
+<p>正确地使用无害处理可以降低系统中污点标记的数量,提高污点分析的效 率,并且避免由于污点扩散导致的分析结果不精确的问题. </p>
+<p>无害处理：包括 加密函数 / 输入验证模块 等</p>
+<h4 id="_5">四. 关键技术<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<p>动/静态分析 分析 显/ 隐式流</p>
+<ol>
+<li>显式流分析</li>
+</ol>
+<p>静态分析：</p>
+<p>转换成分析程序间的数据依赖关系 看 能否从 污染源 传播到 sink点（污点汇聚点）</p>
+<ul>
+<li>首先,根据程序中的函数调用 关系构建调用图(call graph,简称CG);</li>
+<li>然后,在函数内或者函数间根据不同的程序特性进行具体的数据流传播分 析.</li>
+<li>常见的显式流污点传播方式：直接赋值传播、通过函数(过程)调用传播以及通过别名(指针)传播</li>
+</ul>
+<p>分析过程会有很大时空开销，由于只关心入口和出口之间的程序片段，可以尝试采用按需(on-demand)定制的别名分析方法</p>
+<ol>
+<li>动态分析技术 </li>
+</ol>
+<p>动态污点传播分析(简称动态污点分析)是指在程序运行过程中,通过**实时监控**程序的污点数据在系统程序 中的传播来检测数据能否从污点源传播到污点汇聚点.</p>
+<p>动态污点传播分析首先需要为污点数据扩展一个**污点标记(tainted tag)的标签**并将其存储在存储单元(内存、寄存器、缓存等)中,然后根据指令类型和指令操作数设 计相应的传播逻辑传播污点标记.</p>
+<p>动态污点传播分析按照实现层次被分为基于硬件、基于软件以及混合型的污 点传播分析这 3 类.</p>
+<ul>
+<li>
+<p>基于硬件</p>
+<p>需要定制的硬件支持,一般需要在原有体系结构上为寄存器或者 内存扩展一个标记位,用来存储污点标记,代表的系统有Minos[62],Raksha[63]等.</p>
+</li>
+<li>
+<p>基于软件</p>
+<p>基于软件的污点传播分析通过修 改程序的二进制代码来进行污点标记位的存储与传播,代表的系统有 TaintEraser[64],TaintDroid[19]等.</p>
+<p>基于软件 的污点传播的优点在于不必更改处理器等底层的硬件,并且可以支持更高的语义逻辑的安全策略(利用其更贴 近源程序层次的特点),但缺点是使用插桩(instrumentation)或代码重写(code rewriting)修改程序往往会给分析 系统带来巨大的开销.</p>
+</li>
+<li>
+<p>混合型污点传播分析</p>
+</li>
+<li>
+<p>基于虚拟环境的污点分析 </p>
+</li>
+</ul>
+<p>基于虚拟环境的污点分析的核心思想是在虚拟环境中增 加污点分析模块，使污点分析模块和被分析的目标程序运行 在不同环境中。其中，分析模块运行于虚拟机监控层，目标程序处于目标机操作系统层，分析模块不影响目标程序的运行， 记录的污点信息更准确，</p>
+<p>动态分析平台 TEMU 在 QEMU 虚拟机的基础上进行了扩展，能够以较细的粒度分析内核与 多进程间的交互情况</p>
+<p>基于虚拟环境的污点分析不需要修改程序的代码，由于 虚拟机监控层的权限比目标机操作系统层更高，因此分析模 块能够记录系统调用甚至内核执行的指令信息，可以发现系 统底层漏洞，</p>
+<ul>
+<li>基于代码的污点分析 </li>
+</ul>
+<p>基于代码的污点分析根据分析对象的不同也可以被细分 为对**程序源码**进行污点分析和对**二进制代码**进行污点分析两 种。</p>
+<ul>
+<li>
+<p>基于代码的污点分析工具基本都采用了程序切片技术， 使其对程序的理解和分析更为精确。</p>
+<p>程序切片是指能够影响 程序某行的某个变量值的部分语句和判定表达式的集合。自 1979 年被提出后，程序切片技术已经发展出静态切片与动态 切片、前向切片与后向切片以及一些变种技术等多种方法。对程序源码进行污点分析是实现一个带有安全标签的类 型系统，在编译过程中读取程序源码的安全标签，以检查是否 存在违反信息流策略的情况。</p>
+<p>对程序源码进行污点分析能够在 程序编译时发现程序中违反信息流策略的情况，对系统资源 的开销较小，分析执行效率高，缺点是需要获得源代码，在商 业环境下应用难度较高。 </p>
+</li>
+<li>
+<p>对二进制代码进行污点分析是在二进制代码中插入污点 跟踪代码，以获取程序执行时的污点传播情况。动态污点分 析常采用这种方式。</p>
+<p>对二进制代码进行污点分析可以在指令 级别进行污点跟踪检测，精确度高，但频繁的插桩会占用系统 资源，降低系统运行效率。此外，计算机的指令类型和规模使 得二进制代码的精确建模极为困难，且二进制代码缺乏高层 语义支持，一般需要依靠插桩平台或二进制反汇编工具以降 低工作量。</p>
+</li>
+</ul>
+<p><img alt="1640072345729" src="../images/%E6%B1%A1%E7%82%B9%E5%88%86%E6%9E%90/1640072345729.png" /></p>
+<ol>
+<li>应用案例</li>
+</ol>
+<p>1）安卓隐私泄露检测</p>
+<p>2）Java Web 框架上的污点分析技术 </p>
+<p>服务器和web 交互</p>
+<p><img alt="1640072814837" src="../images/%E6%B1%A1%E7%82%B9%E5%88%86%E6%9E%90/1640072814837.png" /></p>
+<h4 id="_6">总结<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<p>最后,除了解决应用程序中的安全问题这一传统职责外,污点分析技术也逐渐被应用在程序分析领域其 他问题(如性能分析、软件缺陷定位、错误检测等)的研究和实践中.RETracer[98]提出了一种针对二进制代码的 动态后向污点分析技术来定位引起软件系统崩溃的浅层原因.ConfAid[99]基于通用污点分析技术提出了一种专 门用于解决由于配置文件中的错误而导致性能下降的错误定位技术.X-ray[100]在 ConfAid 的基础上,利用污点 分析技术逆向追溯导致性能瓶颈的根本原因.如何将污点分析技术与程序分析领域的其他技术相结合、扩展污 点分析技术的应用范畴,也是一个值得探索的研究方</p>
+<p>与符号执行结合使用 </p>
+<p>符号执行( Symbolic Execution，SE) 的核心思想是使用符 号值替代具体数据作为程序输入，并在程序执行过程中以符号 值进行计算，用包含符号的表达式表示程序变量的值和最终的 输出结果。将污点分析与符号执行结合使用的分析工具有 **Angr 和 DsVD**等。符号执行的精度比污点分析技术高， </p>
+<p>陈力波等［36］提出了基于类型的动态污点分析技 术，其核心思想是将类型信息和符号值作为污点信息，在程序 执行时同时进行动态污点分析和符号执行，程序运行结束后 获得污点传播信息和程序执行路径条件，最后通过求解得到 输入变量满足的约束条件。这种技术结合了动态污点分析和 符号执行的优点，对程序有较为全面的理解。朱正欣等［37］基 于动态插桩平台 Pin 以及 libdft 提出了动态符号化污点分析 方法，其核心思想是将污点信息及污点检查策略符号化，并分 析污点数据在传播过程中是否违反污点检查策略，进而判断 程序在动态执行过程中是否存在非法数据操作。还有 BitBlaze ［38］将动态分析与静态分析、混合符号执行与具体执 行、系统仿真与二进制重写等多种分析方法相结合，对二进制 代码进行分析。 </p>
+<h4 id="_7">参考文献：<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<p>污点分析技术的原理和实践应用-计算机学报-2016</p>
+<p>[98]   Cui W, Peinado M, Cha SK, Fratantonio Y, Kemerlis VP. RETracer: Triaging crashes by reverse execution from partial memory dumps. In: Proc. of the 38<sup>th</sup> Int’l Conf. on Software Engineering. ACM Press, 2016. 820−831. [doi: 10.1145/2884781.2884844]</p>
+<p>[99]   Attariyan M, Flinn J. Automating configuration troubleshooting with dynamic information flow analysis. In: Proc. of the Usenix Conf. on Operating Systems Design and Implementation. USENIX Association, 2010. 1−11. <a href="https://www.usenix.org/conference/">https://www.usenix.org/conference/</a> osdi10/automating-configuration-troubleshooting-dynamic-information-flow-analysis </p>
+<p>[100]   Attariyan M, Chow M, Flinn J. X-Ray: Automating root-cause diagnosis of performance anomalies in production software. In: Proc. of the Presented as Part of the 10<sup>th</sup> USENIX Symp. on Operating Systems Design and Implementation (OSDI 2012). 2012. 307−320. <a href="https://www.usenix.org/node/170861">https://www.usenix.org/node/170861</a> </p>
+<p>Angr：</p>
+<p>［34］ SHOSHITAISHVILI Y， WANG Ｒ， SALLS C， et al． SOK: ( state of) the art of war: offensive techniques in binary analysis ［C］/ / Proceeddings of the 2016 IEEE Symposium on Security and Privacy． Washington， DC: IEEE Computer Society， 2016: 138 －157． </p>
+<p>DsVD:</p>
+<p>［35］ WANG Z， TANG Z， ZHOU K， et al． DsVD: an effective low-overhead dynamic software vulnerability discoverer ［C］/ / Proceedings of the 10<sup>th</sup> International Symposium on Autonomous Decentralized Systems． Washington， DC: IEEE Computer Society， 2011: 372 －377． </p>
+<p>［36］ 诸葛建伟，陈力波，田繁，等． 基于类型的动态污点分析技术研 究［J］． 清华大学学报( 自然科学版) ，2012，52( 10) : 1320 － 1334． ( ZHUGE J W， CHEN L B， TIAN F， et al． Ｒesearch of technology for type-based dynamic taint analysis ［J］． Journal of Tsinghua University ( Science and Technology) ， 2012， 52 ( 10) : 1320 －1334． ) </p>
+<h2 id="-">污点分析-其他一些相关工作<a class="headerlink" href="#-" title="Permanent link">&para;</a></h2>
+<h3 id="kirenenko"><a href="https://github.com/ChengyuSong/Kirenenko">Kirenenko</a><a class="headerlink" href="#kirenenko" title="Permanent link">&para;</a></h3>
+<p>由于许多污点引导的模糊测试器（包括 Angora 和 RedQueen </p>
+<p>由于实现非常简单（对 LLVM 中的数据流清理器进行了小小的修改），所以我认为不值得为此撰写论文。因此，我只是对源代码进行了开源，希望人们能基于它构建更多有趣的工具。 </p>
+<h3 id="-_1">一篇硕士毕业论文-符号执行+污点分析<a class="headerlink" href="#-_1" title="Permanent link">&para;</a></h3>
+<p>考虑了一种情况是，一个数组，int a[5]；为每一位元素分配一个符号，当出现数组内部异或运算之类的变换时，可使用符号执行</p>
+<p>实验方面，自己写一个带漏洞的函数，例如简单的strcpy( buf, str,len),以造成缓冲区或堆栈溢出，观察内存，看是否覆盖返回地址</p>
+<p>设置了污点分析的标注及规则， </p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 符号执行" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              符号执行
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../9-tool/firmadyne%2B%E6%8C%96%E6%BC%8F%E6%B4%9E/" class="md-footer__link md-footer__link--next" aria-label="Next: Firmadyne+挖漏洞" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Firmadyne+挖漏洞
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://github.com" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.instant", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "header.autohide"], "search": "../../../assets/javascripts/workers/search.5e67fbfe.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.e87a5f81.min.js"></script>
+      
+    
+  </body>
+</html>
